@@ -1,6 +1,8 @@
 import { sqliteDataSource } from "./data-source"
-import express from "express";
+import express, { Router } from "express";
 import { Request, Response } from "express";
+import { router } from "./routes";
+import bodyParser from "body-parser";
 // import { User } from "./model/User"
 
 /*
@@ -25,9 +27,15 @@ AppDataSource.initialize().then(async () => {
 
 const app = express();
 
+// We use this to be able to parse the body of a request
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get("/", (request: Request, response: Response) => {
     response.send("Hello World!");
 });
+
+app.use(router);
 
 
 app.listen(3000, () => {
