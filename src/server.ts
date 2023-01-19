@@ -1,9 +1,9 @@
+import "express-async-errors" // package to return errors as json. Make sure to import it first
 import { sqliteDataSource } from "./data-source"
-import express, { Router } from "express";
+import express, { NextFunction, Router } from "express";
 import { Request, Response } from "express";
 import { router } from "./routes";
 import bodyParser from "body-parser";
-import { User } from "./model/User"
 
 // Application bootstrap, setting up typeorm
 sqliteDataSource.initialize().then(async () => {
@@ -23,6 +23,20 @@ sqliteDataSource.initialize().then(async () => {
     });
 
     app.use(router);
+
+    // Return all errors to the API as a bad request instead of the console
+    app.use((err: Error, request: Request, response: Response, next: NextFunction) => {
+        if(err instanceof Error) {
+            return response.status(400).json({Error: err.message});
+        }
+
+        // In case something else goes terribly wrong return an internal server error
+        return response.status(500).json({
+            status: "Server error",
+            message: "Internal server Error"
+        });
+
+    });
 
     app.listen(3000, () => {
         console.log("Listening on port 3000");
