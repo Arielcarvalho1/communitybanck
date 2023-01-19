@@ -17,6 +17,7 @@ class CreateUserService {
         const totalAccounts = accounts.length; // Getting the total amount of accounts requested
 
         if(userAlreadyExists) {
+            // deliver error as json response
             throw new Error("user already registered")
         }
 
@@ -24,7 +25,7 @@ class CreateUserService {
         const user = new User(name, login, password, totalAccounts, accounts); 
 
         // Save it to the DB
-        await sqliteDataSource.manager.save(user);
+        await userRepository.save(user);
 
         // Return http response with created object
         return user;
