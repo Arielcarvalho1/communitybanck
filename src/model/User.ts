@@ -19,10 +19,10 @@ class User {
     password: string;
 
     @Column({name: "total_accounts"})
-    totalAccount: number;
+    totalAccounts: number;
 
     @OneToMany(() => Account, (account) => account.accountOwner, {cascade: true})
-    accounts: Account;
+    accounts: Account[];
 
     @CreateDateColumn()
     created_at: Date;
@@ -30,10 +30,16 @@ class User {
     @UpdateDateColumn()
     updated_at: Date;
 
-    constructor() {
+    constructor(name: string, login: string, password: string, totalAccounts: number, accounts: Account[]) {
         if(!this.userId) {
             this.userId = uuid();
         }
+
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.totalAccounts = totalAccounts;
+        this.accounts = accounts;
     }
 
 
