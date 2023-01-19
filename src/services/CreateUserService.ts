@@ -12,26 +12,29 @@ interface ICreateUserRequest {
 
 class CreateUserService {
     async execute({name, login, password, accounts}: ICreateUserRequest) {
-        let user = new User();
+        const userRepository = sqliteDataSource.getRepository(User);
+        const userAlreadyExists = await userRepository.findOneBy({login})
+        console.log(userAlreadyExists);
 
-        // Get a connection with the database
-        await sqliteDataSource.initialize().then(async () => {
-            // Creating a user instance
-            // var user = new User(); // maybe make a constructor for this later
-            user.name = name;
-            user.login = login;
-            user.password = password;
-            user.totalAccount = 2;
-            user.accounts = accounts;
+        if(userAlreadyExists) {
+            throw new Error("user already registered")
+        }
 
-            // Save it to the DB
-            console.log("here")
-            await sqliteDataSource.manager.save(user);
-            console.log("here")
+        // Creating a user instance
+        const user = new User(); // maybe make a constructor for this later
+        user.name = name;
+        user.login = login;
+        user.password = password;
+        user.totalAccount = 2;
+        user.accounts = accounts;
+
+        // Save it to the DB
+        console.log("here")
+        await sqliteDataSource.manager.save(user);
+        console.log("here")
 
 
-        }).catch(error => console.log(error))
-        // we get here if anything goes wrong while dealing with the database
+
 
         console.log(user)
         return user;
