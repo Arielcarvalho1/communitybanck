@@ -1,6 +1,7 @@
 import { sqliteDataSource } from "../data-source";
 import { Account } from "../model/Account";
 import { User } from "../model/User";
+import { hash } from "bcryptjs"; // Password hasher that generates and includes salt
 
 
 interface ICreateUserRequest {
@@ -21,13 +22,16 @@ class CreateUserService {
             throw new Error("user already registered")
         }
 
+        const hashedPassword = await hash(password, 8);
+
         // Creating a user instance
-        const user = new User(name, login, password, totalAccounts, accounts); 
+        const user = new User(name, login, hashedPassword, totalAccounts, accounts); 
 
         // Save it to the DB
         await userRepository.save(user);
 
         // Return http response with created object
+        // Find a way to not returned hashed password back
         return user;
     }
 }

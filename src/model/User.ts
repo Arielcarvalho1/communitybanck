@@ -30,14 +30,14 @@ class User {
     @UpdateDateColumn()
     updated_at: Date;
 
-    constructor(name: string, login: string, password: string, totalAccounts: number, accounts: Account[]) {
+    constructor(name: string, login: string, hashedPassword: string, totalAccounts: number, accounts: Account[]) {
         if(!this.userId) {
             this.userId = uuid();
         }
 
         this.name = name;
         this.login = login;
-        this.password = password;
+        this.password = hashedPassword;
         this.totalAccounts = totalAccounts;
         this.accounts = accounts;
     }
