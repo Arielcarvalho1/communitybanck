@@ -1,6 +1,9 @@
-import { AppDataSource } from "./data-source"
-import { User } from "./model/User"
+import { sqliteDataSource } from "./data-source"
+import express from "express";
+import { Request, Response } from "express";
+// import { User } from "./model/User"
 
+/*
 AppDataSource.initialize().then(async () => {
 
     console.log("Inserting a new user into the database...")
@@ -18,3 +21,16 @@ AppDataSource.initialize().then(async () => {
     console.log("Here you can setup and run express / fastify / any other framework.")
 
 }).catch(error => console.log(error))
+*/
+
+const app = express();
+
+app.get("/", (request: Request, response: Response) => {
+    response.send("Hello World!");
+});
+
+
+app.listen(3000, () => {
+    console.log("Listening on port 3000");
+});
+
