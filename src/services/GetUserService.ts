@@ -4,7 +4,7 @@ import { User } from "../model/User";
 
 class GetUserService {
 
-    async execute(userId: string) {
+    async execute(userId: string, id: string) {
         const userRepository = sqliteDataSource.getRepository(User);
         const user:User = await userRepository.findOneBy({userId});
 
@@ -22,8 +22,11 @@ class GetUserService {
         const newUser = {
             id: user.userId,
             name: user.name,
-            totalAccounts: user.totalAccounts
+            totalAccounts: user.totalAccounts,
+            auth: id
         };
+
+        console.log(newUser)
 
         return newUser;
     }

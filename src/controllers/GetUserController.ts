@@ -7,7 +7,7 @@ class GetUserController {
         const userId = request.params.id.split(":")[1]; // The ID without the ":"
         const getUserService = new GetUserService();
 
-        const user = await getUserService.execute(userId);
+        const user = await getUserService.execute(userId, request.authUserId);
 
         response.json(user);
     }
