@@ -31,7 +31,6 @@ class CreateUserService {
         await userRepository.save(user);
 
         // Return http response with created object
-        // Find a way to not returned hashed password back
         return user;
     }
 }
