@@ -27,6 +27,16 @@ export class CreateAccounts1673960269349 implements MigrationInterface {
                         name: "account_title",
                         type: "varchar",
                         isNullable: false
+                    },
+                    {
+                        name: "created_at",
+                        type: "timestamp",
+                        default: "now()"
+                    },
+                    {
+                        name: "updated_at",
+                        type: "timestamp",
+                        default: "now()"
                     }
                 ],
                 foreignKeys: [

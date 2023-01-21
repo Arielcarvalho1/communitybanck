@@ -23,7 +23,6 @@ class GetUserService {
             id: user.userId,
             name: user.name,
             totalAccounts: user.totalAccounts,
-            auth: id
         };
 
         console.log(newUser)

@@ -1,5 +1,5 @@
 import { User } from "./User";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity("account")
@@ -15,8 +15,14 @@ class Account {
     @Column({name: "account_balance"})
     accountBalance: number;
 
-    @Column({name: "account_balance"})
+    @Column({name: "account_title"})
     accountTitle: string;
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
 
 
 }

@@ -5,15 +5,24 @@ interface IPayload {
     sub: string;
 } 
 
+/**
+ * 
+ * Middleware to check if the user is authenticated. This one won't stop the user
+ * from doing things, unless they messed with the token they have.
+ * IF THEY DID THEY DESERVE TO GET LOCKED OUT
+ * 
+ * I created this so that I can set to subject of the request to the userId incase
+ * a user is authenticated.
+ */
 
-function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
+function checkAuthenticated(request: Request, response: Response, next: NextFunction) {
     const token = request.headers.authorization;
 
     
 
     // Check for token
     if(!token) {
-        return response.status(401).end(); // Forbidden
+        return next(); 
     }
 
 
@@ -37,4 +46,4 @@ function ensureAuthenticated(request: Request, response: Response, next: NextFun
     return next(); // Move forward to execution
 }
 
-export { ensureAuthenticated };
+export { checkAuthenticated };
