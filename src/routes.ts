@@ -4,6 +4,7 @@ import { CreateUserController } from "./controllers/CreateUserController";
 import { DepositFundsController } from "./controllers/DepositFundsController";
 import { GetFundsController } from "./controllers/GetFundsController";
 import { GetUserController } from "./controllers/GetUserController";
+import { TransferFundsController } from "./controllers/TransferFundsController";
 import { checkAuthenticated } from "./middlewares/checkAuthenticated";
 import { ensureAuthenticated } from "./middlewares/ensureAuthenticated";
 
@@ -14,6 +15,7 @@ const getUserController =  new GetUserController();
 const authenticateUserController = new AuthenticateUserController();
 const getFundsController = new GetFundsController();
 const depositFundsController = new DepositFundsController();
+const transferFundsController = new TransferFundsController();
 
 router.post("/api/v1/user", createUserController.handle);
 router.get("/api/v1/user:id", getUserController.handle);
@@ -21,4 +23,6 @@ router.post("/api/v1/session", authenticateUserController.handle) // route to lo
 router.delete("/api/v1/session") // route to logout
 router.get("/api/v1/funds:id?", checkAuthenticated, getFundsController.handle);
 router.put("/api/v1/funds", ensureAuthenticated, depositFundsController.handle);
+router.post("/api/v1/funds", ensureAuthenticated, transferFundsController.handle);
+
 export { router };

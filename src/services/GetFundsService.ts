@@ -64,7 +64,6 @@ class GetFundsService {
 
         if((!id && authUserId) || (id === authUserId)) {
 
-            console.log("here")
             // Building the object to be returned
 
             const funds = {
@@ -77,8 +76,8 @@ class GetFundsService {
         }
 
         // In case we got a parameter ID for look up
+        
         if(id && user) {
-            console.log("here")
             const funds = {
                 "totalFunds": totalFunds
             }
